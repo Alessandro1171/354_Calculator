@@ -15,7 +15,7 @@ def exponential_function(base=float, exponent=float):
     elif exponent == 1:
         return base
     elif 0 < exponent < 1:
-        #TO DO
+        #TO CONTINUE
         return exponential_function(base, exponent/2)*exponential_function(base, exponent/2)
     elif exponent < 0:
         return exponential_function(1 / base, -exponent)
