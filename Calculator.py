@@ -32,9 +32,9 @@ class Calculator:
         }
 
         self.operations = {
-            "(": (3, 4), ")": (3, 5),
+           # "(": (3, 4), ")": (3, 5), "-": (5, 4),
             "/": (4, 4), "*": (4, 5),  # / - \u00F7, * - \u00D7
-            "-": (5, 4), "+": (5, 5)
+            "+": (5, 5)
         }
 
         # self.functions = {
@@ -52,6 +52,9 @@ class Calculator:
         self.create_delete_button()
         self.create_equals_button()
         self.create_comma_button()
+        self.create_open_parenthesis()
+        self.create_close_parenthesis()
+        self.create_minus()
         self.create_f1()
 
     def create_display_labels(self):
@@ -95,6 +98,37 @@ class Calculator:
                                font=DEFAULT_FONT_STYLE, borderwidth=0,
                                command=lambda x=operator: self.append_operator(x))
             button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
+    # ========================= OPERATORS AGAIN ============================
+    def open_parenthesis(self):
+        self.current_expression += "("
+        self.update_label()
+
+    def create_open_parenthesis(self):
+        button = tk.Button(self.buttons_frame, text="(", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0,
+                           command=self.open_parenthesis)
+        button.grid(row=3, column=4, sticky=tk.NSEW)
+
+    def close_parenthesis(self):
+        self.current_expression += ")"
+        self.update_label()
+
+    def create_close_parenthesis(self):
+        button = tk.Button(self.buttons_frame, text=")", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0,
+                           command=self.close_parenthesis)
+        button.grid(row=3, column=5, sticky=tk.NSEW)
+
+    def minus(self):
+        self.current_expression += "-"
+        self.update_label()
+
+    def create_minus(self):
+        button = tk.Button(self.buttons_frame, text="-", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0,
+                           command=self.minus)
+        button.grid(row=5, column=4, sticky=tk.NSEW)
+
 
     # =========================== FUNCTIONS (might need to do these one by one?) ===========================
     # def create_functions_buttons(self):
@@ -102,7 +136,7 @@ class Calculator:
     #         button = tk.Button(self.buttons_frame, text=str(function), bg=OFF_WHITE, fg=LABEL_COLOR,
     #                            font=DEFAULT_FONT_STYLE, borderwidth=0)
     #         button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
-    def f1(self):
+    def f1(self): #ab^x
         chunks = self.current_expression.split(',')
         a = float(chunks[0])
         b = float(chunks[1])
