@@ -1,5 +1,7 @@
 from tkinter import *
 import tkinter as tk
+from ExponentialFunction import print_exp
+from ExponentialFunction import exponential_function
 
 LIGHT_GRAY = "#F5F5F5"
 LABEL_COLOR = "#25265E"
@@ -35,18 +37,22 @@ class Calculator:
             "-": (5, 4), "+": (5, 5)
         }
 
-        self.functions = {
-            "F1": (1, 1), "F2": (1, 2), "F3": (1, 3), "F4": (1, 4), "F5": (1, 5),
-            "F6": (2, 4), "F7": (2, 5)
-        }
+        # self.functions = {
+        #     "F1": (1, 1), "F2": (1, 2), "F3": (1, 3), "F4": (1, 4), "F5": (1, 5),
+        #     "F6": (2, 4), "F7": (2, 5)
+        # }
         self.buttons_frame = self.create_buttons_frame()
+        self.create_buttons()
+
+    def create_buttons(self):
         self.create_digit_buttons()
         self.create_operators_buttons()
-        self.create_functions_buttons()
+        #self.create_functions_buttons()
         self.create_clear_button()
         self.create_delete_button()
         self.create_equals_button()
         self.create_comma_button()
+        self.create_f1()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E,
@@ -64,7 +70,7 @@ class Calculator:
         frame.pack(expand=True, fill="both")
         return frame
 
-# =========================== DIGITS ===========================
+    # =========================== DIGITS ===========================
     def add_to_expression(self, value):
         self.current_expression += str(value)
         self.update_label()
@@ -75,7 +81,7 @@ class Calculator:
                                font=DIGIT_FONT_STYLE, borderwidth=0, command=lambda x=digit: self.add_to_expression(x))
             button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
 
-# =========================== OPERATORS ===========================
+    # =========================== OPERATORS ===========================
     def append_operator(self, operator):
         self.current_expression += operator
         self.total_expression += self.current_expression
@@ -86,17 +92,35 @@ class Calculator:
     def create_operators_buttons(self):
         for operator, grid_value in self.operations.items():
             button = tk.Button(self.buttons_frame, text=str(operator), bg=OFF_WHITE, fg=LABEL_COLOR,
-                               font=DEFAULT_FONT_STYLE, borderwidth=0, command=lambda x=operator: self.append_operator(x))
+                               font=DEFAULT_FONT_STYLE, borderwidth=0,
+                               command=lambda x=operator: self.append_operator(x))
             button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
 
-# =========================== FUNCTIONS (might need to do these one by one?) ===========================
-    def create_functions_buttons(self):
-        for function, grid_value in self.functions.items():
-            button = tk.Button(self.buttons_frame, text=str(function), bg=OFF_WHITE, fg=LABEL_COLOR,
-                               font=DEFAULT_FONT_STYLE, borderwidth=0)
-            button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
+    # =========================== FUNCTIONS (might need to do these one by one?) ===========================
+    # def create_functions_buttons(self):
+    #     for function, grid_value in self.functions.items():
+    #         button = tk.Button(self.buttons_frame, text=str(function), bg=OFF_WHITE, fg=LABEL_COLOR,
+    #                            font=DEFAULT_FONT_STYLE, borderwidth=0)
+    #         button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
+    def f1(self):
+        chunks = self.current_expression.split(',')
+        a = float(chunks[0])
+        b = float(chunks[1])
+        x = float(chunks[2])
+        total = exponential_function(b, x)
+        final_total = a*total
+        self.current_expression = str(final_total)
+        self.update_label()
+        #print(final_total)
+        #print_exp()
 
-# =========================== CLEAR ===========================
+    def create_f1(self):
+        button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR,
+                               font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
+        button.grid(row=1, column=1, sticky=tk.NSEW)
+
+
+    # =========================== CLEAR ===========================
     def clear(self):
         self.current_expression = ""
         self.total_expression = ""
@@ -108,7 +132,7 @@ class Calculator:
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.clear)
         button.grid(row=1, column=6, rowspan=2, sticky=tk.NSEW)
 
-# =========================== COMMA ===========================
+    # =========================== COMMA ===========================
     def comma(self):
         self.current_expression += ","
         self.update_label()
@@ -118,17 +142,17 @@ class Calculator:
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.comma)
         button.grid(row=3, column=6, rowspan=1, sticky=tk.NSEW)
 
-# =========================== DELETE ===========================
+    # =========================== DELETE ===========================
     def delete(self):
         self.current_expression = self.current_expression[:-1]
         self.update_label()
 
     def create_delete_button(self):
         button = tk.Button(self.buttons_frame, text="del", bg=OFF_WHITE, fg=LABEL_COLOR,
-                           font=DEFAULT_FONT_STYLE, borderwidth=0,  command=self.delete)
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.delete)
         button.grid(row=4, column=6, rowspan=2, sticky=tk.NSEW)
 
-# =========================== EQUALS ===========================
+    # =========================== EQUALS ===========================
     def evaluate(self):
         self.total_expression += self.current_expression
         self.update_total_label()
@@ -142,7 +166,7 @@ class Calculator:
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.evaluate)
         button.grid(row=5, column=3, sticky=tk.NSEW)
 
-# ================================================================
+    # ================================================================
 
     def create_buttons_frame(self):
         frame = tk.Frame(self.window)
