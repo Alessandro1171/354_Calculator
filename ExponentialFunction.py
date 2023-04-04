@@ -49,5 +49,26 @@ def exponential_function(base=float, exponent_a=float):
         return base * half_exp * half_exp
 
 
-#x = exponential_function(2, 1.0002)
-#print(x)
+def recursive_exponential(base, exponent):
+    if base == 0:
+        return 0
+    elif exponent == 0:
+        return 1
+    elif exponent == 1:
+        return base
+    elif exponent < 0:
+        return 1.0 / recursive_exponential(base, -exponent)
+    elif exponent % 1 == 0:  # The exponent is an integer
+        if exponent % 2 == 0:
+            return recursive_exponential(base*base, exponent//2)  # x^2n == (x^2)^n
+        else:
+            return base * recursive_exponential(base*base, (exponent-1)//2)
+    else:  # The exponent is NOT an integer
+        # TODO : Need to rework this block of code
+        whole_part = recursive_exponential(base, int(exponent))
+        fractional_part = recursive_exponential(base**(exponent - int(exponent)), 1.0)
+        return whole_part * fractional_part
+
+
+x = recursive_exponential(3, 4.5)
+print(x)

@@ -1,7 +1,6 @@
 from tkinter import *
 import tkinter as tk
-from ExponentialFunction import print_exp
-from ExponentialFunction import exponential_function
+from ExponentialFunction import exponential_function, recursive_exponential
 
 LIGHT_GRAY = "#F5F5F5"
 LABEL_COLOR = "#25265E"
@@ -56,6 +55,7 @@ class Calculator:
         self.create_close_parenthesis()
         self.create_minus()
         self.create_f1()
+        self.create_exponential_function_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E,
@@ -148,10 +148,26 @@ class Calculator:
         #print(final_total)
         #print_exp()
 
+    def exponential_function_click(self): #x^y
+        chunks = self.current_expression.split(',')
+
+        base = float(chunks[0])
+        exponent = float(chunks[1])
+
+        computed_value = recursive_exponential(base, exponent)
+
+        self.current_expression = str(computed_value)
+        self.update_label()
+
     def create_f1(self):
         button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR,
                                font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
         button.grid(row=1, column=1, sticky=tk.NSEW)
+
+    def create_exponential_function_button(self):
+        button = tk.Button(self.buttons_frame, text="x\u02b8", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.exponential_function_click)
+        button.grid(row=1, column=2, sticky=tk.NSEW)
 
 
     # =========================== CLEAR ===========================
