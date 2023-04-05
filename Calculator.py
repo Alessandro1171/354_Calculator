@@ -1,6 +1,4 @@
-from tkinter import *
 import tkinter as tk
-from ExponentialFunction import print_exp
 from ExponentialFunction import exponential_function
 
 LIGHT_GRAY = "#F5F5F5"
@@ -58,6 +56,8 @@ class Calculator:
         self.create_f1()
         self.create_f7()
         self.create_f8()
+        self.create_ab_power_x_button()
+        self.create_x_power_y_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E,
@@ -138,7 +138,7 @@ class Calculator:
     #         button = tk.Button(self.buttons_frame, text=str(function), bg=OFF_WHITE, fg=LABEL_COLOR,
     #                            font=DEFAULT_FONT_STYLE, borderwidth=0)
     #         button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
-    def f1(self): #ab^x
+    def ab_power_x_button_click(self): #ab^x
         chunks = self.current_expression.split(',')
         a = float(chunks[0])
         b = float(chunks[1])
@@ -150,9 +150,20 @@ class Calculator:
         #print(final_total)
         #print_exp()
 
-    def create_f1(self):
-        button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR,
-                               font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
+    def x_power_y_button_click(self): #x^y
+        chunks = self.current_expression.split(',')
+
+        base = float(chunks[0])
+        exponent = float(chunks[1])
+
+        computed_value = exponential_function(base, exponent)
+
+        self.current_expression = str(computed_value)
+        self.update_label()
+
+    def create_ab_power_x_button(self):
+        button = tk.Button(self.buttons_frame, text="ab\u02e3", bg=OFF_WHITE, fg=LABEL_COLOR,
+                               font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.ab_power_x_button_click)
         button.grid(row=1, column=1, sticky=tk.NSEW)
     def f7(self): #ab^x
         chunks = self.current_expression.split(',')
@@ -161,6 +172,7 @@ class Calculator:
         self.update_label()
         #print(final_total)
         #print_exp()
+
 
     def create_f7(self):
         button = tk.Button(self.buttons_frame, text="\u03C3", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f7)
@@ -177,6 +189,11 @@ class Calculator:
     def create_f8(self):
           button = tk.Button(self.buttons_frame, text="S", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f8)
           button.grid(row=2, column=5, sticky=tk.NSEW)
+    def create_x_power_y_button(self):
+        button = tk.Button(self.buttons_frame, text="x\u02b8", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.x_power_y_button_click)
+        button.grid(row=1, column=2, sticky=tk.NSEW)
+
 
     # =========================== CLEAR ===========================
     def clear(self):
