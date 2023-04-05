@@ -152,7 +152,38 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR,
                                font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
         button.grid(row=1, column=1, sticky=tk.NSEW)
+    def f7(self): #ab^x
+        chunks = self.current_expression.split(',')
+        a = float(chunks[0])
+        b = float(chunks[1])
+        x = float(chunks[2])
+        total = exponential_function(b, x)
+        final_total = a*total
+        self.current_expression = str(final_total)
+        self.update_label()
+        #print(final_total)
+        #print_exp()
 
+    def create_f7(self):
+        button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR,
+                               font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
+        button.grid(row=1, column=1, sticky=tk.NSEW)
+
+    def f8(self):  # ab^x
+        chunks = self.current_expression.split(',')
+        a = float(chunks[0])
+        b = float(chunks[1])
+        x = float(chunks[2])
+        total = exponential_function(b, x)
+        final_total = a * total
+        self.current_expression = str(final_total)
+        self.update_label()
+        # print(final_total)
+        # print_exp()
+
+    def create_f8(self):
+          button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
+          button.grid(row=1, column=1, sticky=tk.NSEW)
 
     # =========================== CLEAR ===========================
     def clear(self):
