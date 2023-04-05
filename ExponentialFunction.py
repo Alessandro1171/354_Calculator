@@ -1,55 +1,17 @@
-# Function - y = ab^x
+from HelperFunctions import e_power_x, ln, power, truncate_value
 
-def print_exp():
-    print("this is from exponentialFunction class")
-
-def truncate_value(value):
-    # truncates value to 5 values after decimal point
-    final_value = '%.5f' % value
-    return final_value
+# Constant defining how many rounds/terms to use for the infinite series. Increase this number for better accuracy.
+ROUNDS = 100
 
 
-def check_decimal(num):
-    if num < 0.0001:
-        return 0.0001
-    decimal_digits = len(str(num).split('.')[1])
-    if decimal_digits > 5:
-        final_num = truncate_value(num)
-        return float(final_num)
-    else:
-        return num
+def exponential_function(base, exponent):
+    """ Calculates x^y by using the following property: x^y = e^(y * ln(x)) """
 
+    int_part = int(abs(exponent))
+    fractional_part = abs(exponent) - int_part
 
-def exponential_function(base=float, exponent_a=float):
-    # TODO: CUT THE NUMBER TO MAX OF 5 AFTER DECIMAL POINT
-    array = str(exponent_a).split('.')
-    if len(array) == 2:
-        # values after decimal exists
-        exponent = check_decimal(exponent_a)
-    else:
-        exponent = exponent_a
-    if base == 0:
-        return 0
-    elif exponent == 0:
-        return 1
-    elif exponent == 1:
-        return base
-    elif 0 < exponent < 1:
-        # TO CONTINUE
-        #return exponential_function(base, exponent / 2) * exponential_function(base, exponent / 2)
-        #return base**exponent_a
-        pass
-    elif exponent < 0:
-        return exponential_function(1 / base, -exponent)
-    elif exponent % 2 == 0:
-        half_exp = exponential_function(base, exponent / 2)
-        return half_exp * half_exp
-    else:
-        half_exp = exponential_function(base, (exponent - 1) / 2)
-        return base * half_exp * half_exp
+    calculated_value = e_power_x((fractional_part * ln(base, ROUNDS)), ROUNDS) * power(base, int_part)
 
-
-def recursive_exponential(base, exponent):
     if base == 0:
         return 0
     elif exponent == 0:
@@ -57,18 +19,6 @@ def recursive_exponential(base, exponent):
     elif exponent == 1:
         return base
     elif exponent < 0:
-        return 1.0 / recursive_exponential(base, -exponent)
-    elif exponent % 1 == 0:  # The exponent is an integer
-        if exponent % 2 == 0:
-            return recursive_exponential(base*base, exponent//2)  # x^2n == (x^2)^n
-        else:
-            return base * recursive_exponential(base*base, (exponent-1)//2)
-    else:  # The exponent is NOT an integer
-        # TODO : Need to rework this block of code
-        whole_part = recursive_exponential(base, int(exponent))
-        fractional_part = recursive_exponential(base**(exponent - int(exponent)), 1.0)
-        return whole_part * fractional_part
+        return truncate_value(1.0 / calculated_value)
 
-
-x = recursive_exponential(3, 4.5)
-print(x)
+    return truncate_value(calculated_value)
