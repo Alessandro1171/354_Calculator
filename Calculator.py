@@ -53,7 +53,6 @@ class Calculator:
         self.create_open_parenthesis()
         self.create_close_parenthesis()
         self.create_minus()
-        self.create_f1()
         self.create_f7()
         self.create_f8()
         self.create_ab_power_x_button()
