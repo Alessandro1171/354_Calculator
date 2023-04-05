@@ -1,6 +1,5 @@
 import string
 from array import array
-'''from math import sqrt'''
 def square_root_calculator(squaredNumber):
     if squaredNumber==0 or squaredNumber==1:
         return squaredNumber
@@ -12,9 +11,6 @@ def square_root_calculator(squaredNumber):
     if len(twoNumberParts) >= 2:
         afterDecimal = twoNumberParts[1]
         pairsAfterDecimal = pariPart2(afterDecimal)
-        print("I was here")
-        print(afterDecimal)
-        print(pairsAfterDecimal[0])
     else:
         pairsAfterDecimal = None
 
@@ -30,13 +26,11 @@ def square_root_calculator(squaredNumber):
         root = int(root)
 
     if mainNumber==0 and pairsAfterDecimal is None:
-        print("here1")
         return float(root)
     else:
         rootDecimal = ""
         if not (pairsAfterDecimal is None):
             for pair in pairsAfterDecimal:
-                print("in this loop")
                 mainNumber = str(mainNumber) + pair
                 tempDivider = ""+str(root)+str(rootDecimal)
                 tempDivider = int(tempDivider) * 2
@@ -46,36 +40,31 @@ def square_root_calculator(squaredNumber):
                 mainNumber = int(mainNumber) - subtractor
                 rootDecimal = "" + str(rootDecimal) + str(temp)
             if mainNumber == 0 or len(rootDecimal) >= 5:
-                print("here2")
                 return float((str(root) +"." + rootDecimal))
 
         nextPair="00"
-        print("Main number:" + str(mainNumber) + " root: "+rootDecimal)
         while mainNumber != 0 and len(rootDecimal) < 5:
             mainNumber = str(mainNumber) + nextPair
             tempDivider = "" + str(root) + rootDecimal
             tempDivider = int(tempDivider) * 2
-            print(str(tempDivider))
             temp = getHighestDivider(tempDivider, int(mainNumber))
             subtractor = "" + str(tempDivider) + str(temp)
             subtractor = int(subtractor) * temp
             mainNumber = int(mainNumber) - subtractor
             rootDecimal = "" + str(rootDecimal) + str(temp)
-        print("here3")
         return float((str(root) + "." + rootDecimal))
 
 def getHighestDivider(currenDivider, currentNumber):
+    if(currentNumber<1):
+        return 0
     counter=1
     subtrackingValue=1.00
     while subtrackingValue < currentNumber:
-        print(str(counter))
         temp = ""+str(currenDivider)+str(counter)
         temp = int(temp)
-        '''print(temp)'''
         subtrackingValue = temp *counter
         counter = counter+1
     counter = int(counter)-2
-    print(counter)
     return counter
 
 def pairPart1(beforeDecimal):
@@ -109,26 +98,23 @@ def check_decimal(x):
         return True
     else:
         return False
-def standard_deviation(input=string, population=bool):
-    data = input.split(",")
+def standard_deviation(input=array, population=bool):
     n = 0.0
-    ln(n)
+
     if population:
-        n = len(data)
+        n = len(input)
     else:
-        n = len(data)-1
+        n = len(input)-1
     mean = 0.0
-    for x in data:
+    for x in input:
         mean += float(x)
     sum = 0.0
-    mean = float(mean) / len(data)
-    for x in data:
-        sum += (float(x) - mean)
-    standard_deviation_value = sum * sum
-    standard_deviation_value = standard_deviation_value/n
+    mean = float(mean) / len(input)
+    for x in input:
+        temp = (float(x) - mean)
+        sum += (temp*temp)
+    standard_deviation_value = sum/n
     standard_deviation_value = square_root_calculator(standard_deviation_value)
     if check_decimal(standard_deviation_value):
         standard_deviation_value = round(standard_deviation_value, 5)
     return standard_deviation_value
-x = square_root_calculator(2376.592)
-print(x)

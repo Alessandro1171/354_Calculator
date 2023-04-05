@@ -11,7 +11,7 @@ DIGIT_FONT_STYLE = ("Arial", 20, "bold")
 DEFAULT_FONT_STYLE = ("Arial", 20)
 OFF_WHITE = "#F8FAFF"
 WHITE = "#FFFFFF"
-
+import  StandardDeviation
 
 class Calculator:
     def __init__(self):
@@ -56,6 +56,8 @@ class Calculator:
         self.create_close_parenthesis()
         self.create_minus()
         self.create_f1()
+        self.create_f7()
+        self.create_f8()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E,
@@ -154,36 +156,27 @@ class Calculator:
         button.grid(row=1, column=1, sticky=tk.NSEW)
     def f7(self): #ab^x
         chunks = self.current_expression.split(',')
-        a = float(chunks[0])
-        b = float(chunks[1])
-        x = float(chunks[2])
-        total = exponential_function(b, x)
-        final_total = a*total
+        final_total =StandardDeviation.standard_deviation(chunks, True)
         self.current_expression = str(final_total)
         self.update_label()
         #print(final_total)
         #print_exp()
 
     def create_f7(self):
-        button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR,
-                               font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
-        button.grid(row=1, column=1, sticky=tk.NSEW)
+        button = tk.Button(self.buttons_frame, text="\u03C3", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f7)
+        button.grid(row=2, column=4, sticky=tk.NSEW)
 
     def f8(self):  # ab^x
         chunks = self.current_expression.split(',')
-        a = float(chunks[0])
-        b = float(chunks[1])
-        x = float(chunks[2])
-        total = exponential_function(b, x)
-        final_total = a * total
+        final_total = StandardDeviation.standard_deviation(chunks, False)
         self.current_expression = str(final_total)
         self.update_label()
         # print(final_total)
         # print_exp()
 
     def create_f8(self):
-          button = tk.Button(self.buttons_frame, text="F1", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f1)
-          button.grid(row=1, column=1, sticky=tk.NSEW)
+          button = tk.Button(self.buttons_frame, text="S", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f8)
+          button.grid(row=2, column=5, sticky=tk.NSEW)
 
     # =========================== CLEAR ===========================
     def clear(self):
