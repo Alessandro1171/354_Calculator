@@ -54,7 +54,7 @@ class Calculator:
         self.create_close_parenthesis()
         self.create_minus()
         self.create_f7()
-        self.create_f8()
+        self.create_arccox_button()
         self.create_ab_power_x_button()
         self.create_x_power_y_button()
 
@@ -177,17 +177,20 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="\u03C3", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f7)
         button.grid(row=2, column=4, sticky=tk.NSEW)
 
-    def f8(self):  # ab^x
-        chunks = self.current_expression.split(',')
-        final_total = StandardDeviation.standard_deviation(chunks, False)
-        self.current_expression = str(final_total)
+    def arc_cossine_button_click(self): # arccosine
+        result =float(self.current_expression)
+        print(result)
+        computed_value=arccos(result)
+        print(computed_value)
+        self.current_expression=str(computed_value)
+        print(self.current_expression)
         self.update_label()
-        # print(final_total)
-        # print_exp()
-
-    def create_f8(self):
-          button = tk.Button(self.buttons_frame, text="S", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f8)
-          button.grid(row=2, column=5, sticky=tk.NSEW)
+        
+    def create_arccox_button(self):
+        button = tk.Button(self.buttons_frame, text="cos\u207B\u00B9x", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.arc_cossine_button_click)
+        button.grid(row=2, column=5, sticky=tk.NSEW)
+        
     def create_x_power_y_button(self):
         button = tk.Button(self.buttons_frame, text="x\u02b8", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.x_power_y_button_click)
@@ -245,6 +248,10 @@ class Calculator:
     def create_buttons_frame(self):
         frame = tk.Frame(self.window)
         frame.pack(expand=True, fill="both")
+        for i in range(5):
+            frame.rowconfigure(i, weight=1)
+        for j in range(6):
+            frame.columnconfigure(j, weight=1)  # set column width to be the same
         return frame
 
     def update_total_label(self):
