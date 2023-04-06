@@ -1,6 +1,7 @@
 import tkinter as tk
 from ExponentialFunction import exponential_function
 from Arccos import arccos
+from Log import log
 
 
 LIGHT_GRAY = "#F5F5F5"
@@ -59,6 +60,7 @@ class Calculator:
         self.create_arccox_button()
         self.create_ab_power_x_button()
         self.create_x_power_y_button()
+        self.create_log_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E,
@@ -162,6 +164,17 @@ class Calculator:
         self.current_expression = str(computed_value)
         self.update_label()
 
+    def log_button_click(self): #x^y
+        chunks = self.current_expression.split(',')
+
+        x = float(chunks[0])
+        base = float(chunks[1])
+
+        computed_value = log(x, base)
+
+        self.current_expression = str(computed_value)
+        self.update_label()
+
     def create_ab_power_x_button(self):
         button = tk.Button(self.buttons_frame, text="ab\u02e3", bg=OFF_WHITE, fg=LABEL_COLOR,
                                font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.ab_power_x_button_click)
@@ -197,6 +210,11 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="x\u02b8", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.x_power_y_button_click)
         button.grid(row=1, column=2, sticky=tk.NSEW)
+
+    def create_log_button(self):
+        button = tk.Button(self.buttons_frame, text="logb(x)", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.log_button_click)
+        button.grid(row=1, column=5, sticky=tk.NSEW)
 
 
     # =========================== CLEAR ===========================
