@@ -9,7 +9,7 @@ DIGIT_FONT_STYLE = ("Arial", 20, "bold")
 DEFAULT_FONT_STYLE = ("Arial", 20)
 OFF_WHITE = "#F8FAFF"
 WHITE = "#FFFFFF"
-
+import  StandardDeviation
 
 class Calculator:
     def __init__(self):
@@ -53,6 +53,8 @@ class Calculator:
         self.create_open_parenthesis()
         self.create_close_parenthesis()
         self.create_minus()
+        self.create_f7()
+        self.create_f8()
         self.create_ab_power_x_button()
         self.create_x_power_y_button()
 
@@ -162,7 +164,30 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="ab\u02e3", bg=OFF_WHITE, fg=LABEL_COLOR,
                                font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.ab_power_x_button_click)
         button.grid(row=1, column=1, sticky=tk.NSEW)
+    def f7(self): #ab^x
+        chunks = self.current_expression.split(',')
+        final_total =StandardDeviation.standard_deviation(chunks, True)
+        self.current_expression = str(final_total)
+        self.update_label()
+        #print(final_total)
+        #print_exp()
 
+
+    def create_f7(self):
+        button = tk.Button(self.buttons_frame, text="\u03C3", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f7)
+        button.grid(row=2, column=4, sticky=tk.NSEW)
+
+    def f8(self):  # ab^x
+        chunks = self.current_expression.split(',')
+        final_total = StandardDeviation.standard_deviation(chunks, False)
+        self.current_expression = str(final_total)
+        self.update_label()
+        # print(final_total)
+        # print_exp()
+
+    def create_f8(self):
+          button = tk.Button(self.buttons_frame, text="S", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f8)
+          button.grid(row=2, column=5, sticky=tk.NSEW)
     def create_x_power_y_button(self):
         button = tk.Button(self.buttons_frame, text="x\u02b8", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.x_power_y_button_click)
