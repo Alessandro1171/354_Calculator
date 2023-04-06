@@ -1,5 +1,7 @@
 import tkinter as tk
 from ExponentialFunction import exponential_function
+from Arccos import arccos
+
 
 LIGHT_GRAY = "#F5F5F5"
 LABEL_COLOR = "#25265E"
