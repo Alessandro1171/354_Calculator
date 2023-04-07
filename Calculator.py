@@ -2,6 +2,7 @@ import tkinter as tk
 from ExponentialFunction import exponential_function
 from Arccos import arccos
 from GammaFunction import gamma
+from HyperSineFunction import exponential_function2
 
 
 LIGHT_GRAY = "#F5F5F5"
@@ -61,6 +62,7 @@ class Calculator:
         self.create_ab_power_x_button()
         self.create_x_power_y_button()
         self.create_gamma_button()
+        self.create_hyperbolic_sine_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E,
@@ -196,6 +198,16 @@ class Calculator:
         self.current_expression = str(computed_value)
         self.update_label()
         
+        
+    def hyperbolic_sine_button_click(self):
+        x= float(self.current_expression)
+        e_approx = 2.7182818284590452353602874713527
+        numerator = exponential_function2(e_approx, x) - exponential_function2(e_approx, -x)
+        denominator = 2
+        final_total = numerator / denominator
+        self.current_expression = str(final_total)
+        self.update_label()
+        
     def create_arccox_button(self):
         button = tk.Button(self.buttons_frame, text="cos\u207B\u00B9x", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.arc_cossine_button_click)
@@ -210,6 +222,11 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="Γ", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.gamma_button_click)
         button.grid(row=1, column=3, sticky=tk.NSEW)
+        
+    def create_hyperbolic_sine_button(self):
+        button = tk.Button(self.buttons_frame, text="sinh", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.hyperbolic_sine_button_click)
+        button.grid(row=1, column=4, sticky=tk.NSEW)
 
     # =========================== CLEAR ===========================
     def clear(self):
