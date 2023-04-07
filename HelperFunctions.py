@@ -170,3 +170,10 @@ def check_decimal(x):
         return True
     else:
         return False
+
+
+def multi_factorial(n, decrement):
+    if n <= 1:
+        return 1
+    else:
+        return n * multi_factorial(n - decrement, decrement)
