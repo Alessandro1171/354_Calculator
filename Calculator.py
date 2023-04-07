@@ -1,6 +1,7 @@
 import tkinter as tk
 from ExponentialFunction import exponential_function
 from Arccos import arccos
+from GammaFunction import gamma
 
 
 LIGHT_GRAY = "#F5F5F5"
@@ -59,6 +60,7 @@ class Calculator:
         self.create_arccox_button()
         self.create_ab_power_x_button()
         self.create_x_power_y_button()
+        self.create_gamma_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E,
@@ -180,12 +182,18 @@ class Calculator:
         button.grid(row=2, column=4, sticky=tk.NSEW)
 
     def arc_cossine_button_click(self): # arccosine
-        result =float(self.current_expression)
+        result = float(self.current_expression)
         print(result)
         computed_value=arccos(result)
         print(computed_value)
         self.current_expression=str(computed_value)
         print(self.current_expression)
+        self.update_label()
+
+    def gamma_button_click(self):
+        computed_value = gamma(float(self.current_expression))
+
+        self.current_expression = str(computed_value)
         self.update_label()
         
     def create_arccox_button(self):
@@ -198,6 +206,10 @@ class Calculator:
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.x_power_y_button_click)
         button.grid(row=1, column=2, sticky=tk.NSEW)
 
+    def create_gamma_button(self):
+        button = tk.Button(self.buttons_frame, text="Γ", bg=OFF_WHITE, fg=LABEL_COLOR,
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.gamma_button_click)
+        button.grid(row=1, column=3, sticky=tk.NSEW)
 
     # =========================== CLEAR ===========================
     def clear(self):
