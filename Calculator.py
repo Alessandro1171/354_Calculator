@@ -5,17 +5,16 @@ from Log import log
 from GammaFunction import gamma
 from HyperSineFunction import exponential_function2
 
-
-
 LIGHT_GRAY = "#F5F5F5"
 LABEL_COLOR = "#25265E"
 SMALL_FONT_STYLE = ("Arial", 10)
-LARGE_FONT_STYLE = ("Arial", 22, "bold")
+LARGE_FONT_STYLE = ("Arial", 18, "bold")
 DIGIT_FONT_STYLE = ("Arial", 20, "bold")
 DEFAULT_FONT_STYLE = ("Arial", 20)
 OFF_WHITE = "#F8FAFF"
 WHITE = "#FFFFFF"
-import  StandardDeviation
+import StandardDeviation
+
 
 class Calculator:
     def __init__(self):
@@ -36,7 +35,7 @@ class Calculator:
         }
 
         self.operations = {
-           # "(": (3, 4), ")": (3, 5), "-": (5, 4),
+            # "(": (3, 4), ")": (3, 5), "-": (5, 4),
             "/": (4, 4), "*": (4, 5),  # / - \u00F7, * - \u00D7
             "+": (5, 5)
         }
@@ -51,7 +50,7 @@ class Calculator:
     def create_buttons(self):
         self.create_digit_buttons()
         self.create_operators_buttons()
-        #self.create_functions_buttons()
+        # self.create_functions_buttons()
         self.create_clear_button()
         self.create_delete_button()
         self.create_equals_button()
@@ -108,6 +107,7 @@ class Calculator:
                                font=DEFAULT_FONT_STYLE, borderwidth=0,
                                command=lambda x=operator: self.append_operator(x))
             button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
+
     # ========================= OPERATORS AGAIN ============================
     def open_parenthesis(self):
         self.current_expression += "("
@@ -139,94 +139,127 @@ class Calculator:
                            command=self.minus)
         button.grid(row=5, column=4, sticky=tk.NSEW)
 
-
     # =========================== FUNCTIONS (might need to do these one by one?) ===========================
     # def create_functions_buttons(self):
     #     for function, grid_value in self.functions.items():
     #         button = tk.Button(self.buttons_frame, text=str(function), bg=OFF_WHITE, fg=LABEL_COLOR,
     #                            font=DEFAULT_FONT_STYLE, borderwidth=0)
     #         button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
-    def ab_power_x_button_click(self): #ab^x
-        chunks = self.current_expression.split(',')
-        a = float(chunks[0])
-        b = float(chunks[1])
-        x = float(chunks[2])
-        total = exponential_function(b, x)
-        final_total = a*total
-        self.current_expression = str(final_total)
-        self.update_label()
-        #print(final_total)
-        #print_exp()
 
-    def x_power_y_button_click(self): #x^y
-        chunks = self.current_expression.split(',')
+    def ab_power_x_button_click(self):  # ab^x
+        try:
+            chunks = self.current_expression.split(',')
+            a = float(chunks[0])
+            b = float(chunks[1])
+            x = float(chunks[2])
+            total = exponential_function(b, x)
+            final_total = a * total
+            self.current_expression = str(final_total)
 
-        base = float(chunks[0])
-        exponent = float(chunks[1])
+        except Exception as e:
+            self.current_expression = "Wrong format entered"
+        finally:
+            self.update_label()
 
-        computed_value = exponential_function(base, exponent)
+    def x_power_y_button_click(self):  # x^y
+        try:
+            chunks = self.current_expression.split(',')
 
-        self.current_expression = str(computed_value)
-        self.update_label()
+            base = float(chunks[0])
+            exponent = float(chunks[1])
 
-    def log_button_click(self): #x^y
-        chunks = self.current_expression.split(',')
+            computed_value = exponential_function(base, exponent)
 
-        x = float(chunks[0])
-        base = float(chunks[1])
+            self.current_expression = str(computed_value)
 
-        computed_value = log(x, base)
+        except Exception as e:
+            self.current_expression = "Wrong format entered"
+        finally:
+            self.update_label()
 
-        self.current_expression = str(computed_value)
-        self.update_label()
+    def log_button_click(self):
+        try:
+            chunks = self.current_expression.split(',')
+
+            x = float(chunks[0])
+            base = float(chunks[1])
+
+            computed_value = log(x, base)
+
+            self.current_expression = str(computed_value)
+            #self.update_label()
+        except Exception as e:
+            self.current_expression = "Wrong format entered"
+        finally:
+            self.update_label()
 
     def create_ab_power_x_button(self):
         button = tk.Button(self.buttons_frame, text="ab\u02e3", bg=OFF_WHITE, fg=LABEL_COLOR,
-                               font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.ab_power_x_button_click)
+                           font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.ab_power_x_button_click)
         button.grid(row=1, column=1, sticky=tk.NSEW)
-    def f7(self): #ab^x
-        chunks = self.current_expression.split(',')
-        final_total =StandardDeviation.standard_deviation(chunks, True)
-        self.current_expression = str(final_total)
-        self.update_label()
-        #print(final_total)
-        #print_exp()
 
+    def f7(self):
+        try:
+            chunks = self.current_expression.split(',')
+            final_total = StandardDeviation.standard_deviation(chunks, True)
+            self.current_expression = str(final_total)
+        #self.update_label()
+        # print(final_total)
+        # print_exp()
+        except Exception as e:
+            self.current_expression = "Wrong format entered"
+        finally:
+            self.update_label()
 
     def create_f7(self):
-        button = tk.Button(self.buttons_frame, text="\u03C3", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.f7)
+        button = tk.Button(self.buttons_frame, text="\u03C3", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
+                           borderwidth=0, command=self.f7)
         button.grid(row=2, column=4, sticky=tk.NSEW)
 
-    def arc_cossine_button_click(self): # arccosine
-        result = float(self.current_expression)
-        print(result)
-        computed_value=arccos(result)
-        print(computed_value)
-        self.current_expression=str(computed_value)
-        print(self.current_expression)
-        self.update_label()
+    def arc_cossine_button_click(self):  # arccosine
+        try:
+            result = float(self.current_expression)
+            print(result)
+            computed_value = arccos(result)
+            print(computed_value)
+            self.current_expression = str(computed_value)
+            print(self.current_expression)
+            #self.update_label()
+        except Exception as e:
+            self.current_expression = "Wrong format entered"
+        finally:
+            self.update_label()
 
     def gamma_button_click(self):
-        computed_value = gamma(float(self.current_expression))
+        try:
+            computed_value = gamma(float(self.current_expression))
 
-        self.current_expression = str(computed_value)
-        self.update_label()
-        
-        
+            self.current_expression = str(computed_value)
+            #self.update_label()
+        except Exception as e:
+            self.current_expression = "Wrong format entered"
+        finally:
+            self.update_label()
     def hyperbolic_sine_button_click(self):
-        x= float(self.current_expression)
-        e_approx = 2.7182818284590452353602874713527
-        numerator = exponential_function2(e_approx, x) - exponential_function2(e_approx, -x)
-        denominator = 2
-        final_total = numerator / denominator
-        self.current_expression = str(final_total)
-        self.update_label()
-        
+        try:
+            x = float(self.current_expression)
+            e_approx = 2.7182818284590452353602874713527
+            numerator = exponential_function2(e_approx, x) - exponential_function2(e_approx, -x)
+            denominator = 2
+            final_total = numerator / denominator
+            self.current_expression = str(final_total)
+            #self.update_label()
+        except Exception as e:
+            self.current_expression = "Wrong format entered"
+        finally:
+            self.update_label()
+
+
     def create_arccox_button(self):
         button = tk.Button(self.buttons_frame, text="cos\u207B\u00B9x", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.arc_cossine_button_click)
         button.grid(row=2, column=5, sticky=tk.NSEW)
-        
+
     def create_x_power_y_button(self):
         button = tk.Button(self.buttons_frame, text="x\u02b8", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.x_power_y_button_click)
@@ -241,7 +274,7 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="Γ", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.gamma_button_click)
         button.grid(row=1, column=3, sticky=tk.NSEW)
-        
+
     def create_hyperbolic_sine_button(self):
         button = tk.Button(self.buttons_frame, text="sinh", bg=OFF_WHITE, fg=LABEL_COLOR,
                            font=DEFAULT_FONT_STYLE, borderwidth=0, command=self.hyperbolic_sine_button_click)
@@ -284,9 +317,15 @@ class Calculator:
         self.total_expression += self.current_expression
         self.update_total_label()
 
-        self.current_expression = str(eval(self.total_expression))
-        self.total_expression = ""
-        self.update_label()
+        try:
+            self.current_expression = str(eval(self.total_expression))
+            self.total_expression = ""
+            self.update_label()
+
+        except Exception as e:
+            self.current_expression = "Error"
+        finally:
+            self.update_label()
 
     def create_equals_button(self):
         button = tk.Button(self.buttons_frame, text="=", bg=OFF_WHITE, fg=LABEL_COLOR,
