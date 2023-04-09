@@ -165,7 +165,7 @@ def pariPart2(afterDecimal):
         arrayOfPairs.append((afterDecimal+"0"))
     return arrayOfPairs
 def check_decimal(x):
-    decimal_digits = len(str(x).split('.')[1])
+    decimal_digits = len(str(x).split(".")[1])
     if decimal_digits > 5:
         return True
     else:

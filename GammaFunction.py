@@ -1,6 +1,7 @@
 from HelperFunctions import truncate_value, multi_factorial
 from ExponentialFunction import exponential_function
 
+
 # TODO: FIX bug when working with decimals (causes error)
 def gamma(n):
     if n == 0 or n == 1:  # Base case for gamma
