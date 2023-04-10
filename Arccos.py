@@ -1,6 +1,3 @@
-from HelperFunctions import truncate_value, abs,square_root_calculator
-
-
 def arccos(x):
     if x > 1 or x < -1:
         return float("nan")  # Return NaN for out-of-bounds inputs
