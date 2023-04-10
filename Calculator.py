@@ -185,7 +185,8 @@ class Calculator:
     def standard_deviation_button_click(self):
         try:
             chunks = self.current_expression.split(",")
-            final_total = standard_deviation(chunks, True)
+            final_total = standard_deviation(chunks)
+
             self.current_expression = str(final_total)
         except Exception as e:
             self.current_expression = FORMAT_ERROR_MESSAGE
@@ -193,6 +194,7 @@ class Calculator:
             self.update_label()
 
     def arc_cossine_button_click(self):
+
         try:
             result = float(self.current_expression)
             computed_value = arccos(result)
