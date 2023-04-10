@@ -1,119 +1,137 @@
 import string
 from array import array
-def square_root_calculator(squaredNumber):
-    if squaredNumber==0 or squaredNumber==1:
-        return squaredNumber
-    twoNumberParts=str(float(squaredNumber)).split('.')
-    beforeDecimal=twoNumberParts[0]
-    pairsAfterDecimal= []
-    pairsBeforeDecimal = pairPart1(beforeDecimal)
 
-    if len(twoNumberParts) >= 2:
-        afterDecimal = twoNumberParts[1]
-        pairsAfterDecimal = pariPart2(afterDecimal)
+
+def square_root_calculator(squared_number):
+    """calculates the square root of the number"""
+    if squared_number == 0 or squared_number == 1:
+        return squared_number
+    two_number_parts = str(float(squared_number)).split('.')
+    before_decimal = two_number_parts[0]
+    pairs_after_decimal = []
+    pairs_before_decimal = pair_part1(before_decimal)
+    # divides number into pairs of two numerals
+    if len(two_number_parts) >= 2:
+        after_decimal = two_number_parts[1]
+        pairs_after_decimal = pair_part2(after_decimal)
     else:
-        pairsAfterDecimal = None
+        pairs_after_decimal = None
 
     root = 0
-    mainNumber = ""
-    for pair in pairsBeforeDecimal:
-        mainNumber = str(mainNumber) + pair
-        temp = getHighestDivider((root*2), int(mainNumber))
-        subtractor=""+str((root * 2)) +str(temp)
-        subtractor  = int(subtractor)*temp
-        mainNumber = int(mainNumber) - subtractor
+    main_number = ""
+    # calculates square root for numbers before the decimal
+    for pair in pairs_before_decimal:
+        main_number = str(main_number) + pair
+        temp = get_highest_divider((root * 2), int(main_number))
+        subtractor = "" + str((root * 2)) + str(temp)
+        subtractor = int(subtractor) * temp
+        main_number = int(main_number) - subtractor
         root = "" + str(root) + str(temp)
         root = int(root)
-
-    if mainNumber==0 and pairsAfterDecimal is None:
+    # return square root if the number is a prefect square
+    if main_number == 0 and pairs_after_decimal is None:
         return float(root)
     else:
-        rootDecimal = ""
-        if not (pairsAfterDecimal is None):
-            for pair in pairsAfterDecimal:
-                mainNumber = str(mainNumber) + pair
-                tempDivider = ""+str(root)+str(rootDecimal)
-                tempDivider = int(tempDivider) * 2
-                temp = getHighestDivider(tempDivider, int(mainNumber))
-                subtractor = "" + str(tempDivider) + str(temp)
+        root_decimal = ""
+        # calculates square root for numbers after the decimal
+        if pairs_after_decimal:
+            for pair in pairs_after_decimal:
+                main_number = str(main_number) + pair
+                temp_divider = "" + str(root) + str(root_decimal)
+                temp_divider = int(temp_divider) * 2
+                temp = get_highest_divider(temp_divider, int(main_number))
+                subtractor = "" + str(temp_divider) + str(temp)
                 subtractor = int(subtractor) * temp
-                mainNumber = int(mainNumber) - subtractor
-                rootDecimal = "" + str(rootDecimal) + str(temp)
-            if mainNumber == 0 or len(rootDecimal) >= 5:
-                return float((str(root) +"." + rootDecimal))
+                main_number = int(main_number) - subtractor
+                root_decimal = "" + str(root_decimal) + str(temp)
+            if main_number == 0 or len(root_decimal) >= 5:
+                return float((str(root) + "." + root_decimal))
 
-        nextPair="00"
-        while mainNumber != 0 and len(rootDecimal) < 5:
-            mainNumber = str(mainNumber) + nextPair
-            tempDivider = "" + str(root) + rootDecimal
-            tempDivider = int(tempDivider) * 2
-            temp = getHighestDivider(tempDivider, int(mainNumber))
-            subtractor = "" + str(tempDivider) + str(temp)
+        next_pair = "00"
+        # calculates square root until 5 decimal accuracy
+        while main_number != 0 and len(root_decimal) < 5:
+            main_number = str(main_number) + next_pair
+            temp_divider = "" + str(root) + root_decimal
+            temp_divider = int(temp_divider) * 2
+            temp = get_highest_divider(temp_divider, int(main_number))
+            subtractor = "" + str(temp_divider) + str(temp)
             subtractor = int(subtractor) * temp
-            mainNumber = int(mainNumber) - subtractor
-            rootDecimal = "" + str(rootDecimal) + str(temp)
-        return float((str(root) + "." + rootDecimal))
+            main_number = int(main_number) - subtractor
+            root_decimal = "" + str(root_decimal) + str(temp)
+        return float((str(root) + "." + root_decimal))
 
-def getHighestDivider(currenDivider, currentNumber):
-    if(currentNumber<1):
+
+def get_highest_divider(current_divider, current_number):
+    """find the largest number you can divide from the current number"""
+    if current_number < 1:
         return 0
-    counter=1
-    subtrackingValue=1.00
-    while subtrackingValue < currentNumber:
-        temp = ""+str(currenDivider)+str(counter)
+    counter = 1
+    subtracking_value = 1.00
+    while subtracking_value < current_number:
+        temp = "" + str(current_divider) + str(counter)
         temp = int(temp)
-        subtrackingValue = temp *counter
-        counter = counter+1
-    counter = int(counter)-2
+        subtracking_value = temp * counter
+        counter = counter + 1
+    counter = int(counter) - 2
     return counter
 
-def pairPart1(beforeDecimal):
-    arrayOfPairs=[]
-    if len(beforeDecimal)%2!=0:
-        firstCharacter="0"+beforeDecimal[: 1]
-        beforeDecimal = beforeDecimal[1: ]
-        arrayOfPairs.append(firstCharacter)
-    else:
-        firstTwoCharacter =  beforeDecimal[: 2]
-        beforeDecimal = beforeDecimal[2:]
-        arrayOfPairs.append(firstTwoCharacter)
-    while beforeDecimal!="":
-        characterPair = beforeDecimal[: 2]
-        beforeDecimal = beforeDecimal[2:]
-        arrayOfPairs.append(characterPair)
-    return arrayOfPairs
-def pariPart2(afterDecimal):
-    arrayOfPairs = []
 
-    while len(afterDecimal) > 1:
-        characterPair = afterDecimal[: 2]
-        afterDecimal = afterDecimal[2:]
-        arrayOfPairs.append(characterPair)
-    if len(afterDecimal) == 1:
-        arrayOfPairs.append((afterDecimal+"0"))
-    return arrayOfPairs
+def pair_part1(before_decimal):
+    """divides all the numerals for the given number into pairs of two adds zero at the end for even"""
+    array_of_pairs = []
+    # adds zero at the start if the number is odd
+    if len(before_decimal) % 2 != 0:
+        first_character = "0" + before_decimal[: 1]
+        before_decimal = before_decimal[1:]
+        array_of_pairs.append(first_character)
+    else:
+        first_two_character = before_decimal[: 2]
+        before_decimal = before_decimal[2:]
+        array_of_pairs.append(first_two_character)
+    while before_decimal != "":
+        character_pair = before_decimal[: 2]
+        before_decimal = before_decimal[2:]
+        array_of_pairs.append(character_pair)
+    return array_of_pairs
+
+
+def pair_part2(after_decimal):
+    """divides all the numerals for the given number into pairs of two adds zero at the end for odd"""
+    array_of_pairs = []
+
+    while len(after_decimal) > 1:
+        character_pair = after_decimal[: 2]
+        after_decimal = after_decimal[2:]
+        array_of_pairs.append(character_pair)
+    # adds zero at the end if the number is odd
+    if len(after_decimal) == 1:
+        array_of_pairs.append((after_decimal + "0"))
+    return array_of_pairs
+
+
 def check_decimal(x):
+    """checks as number has less than 5 decimals"""
     decimal_digits = len(str(x).split('.')[1])
     if decimal_digits > 5:
         return True
     else:
         return False
-def standard_deviation(input=array, population=bool):
-    n = 0.0
 
-    if population:
-        n = len(input)
-    else:
-        n = len(input)-1
+
+def standard_deviation(standard_deviation_input: array):
+    """gets the standard deviation of a given array of numbers"""
+    n = len(standard_deviation_input)
     mean = 0.0
-    for x in input:
+    # gets mean of arrays
+    for x in standard_deviation_input:
         mean += float(x)
-    sum = 0.0
-    mean = float(mean) / len(input)
-    for x in input:
+    total_sum = 0.0
+    mean = float(mean) / len(standard_deviation_input)
+    # gets sum of all values (xi - mean)
+    for x in standard_deviation_input:
         temp = (float(x) - mean)
-        sum += (temp*temp)
-    standard_deviation_value = sum/n
+        total_sum += (temp * temp)
+    standard_deviation_value = total_sum / n
     standard_deviation_value = square_root_calculator(standard_deviation_value)
     if check_decimal(standard_deviation_value):
         standard_deviation_value = round(standard_deviation_value, 5)

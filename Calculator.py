@@ -189,9 +189,10 @@ class Calculator:
         button.grid(row=1, column=1, sticky=tk.NSEW)
 
     def f7(self):
+        """standard deviation action for the button"""
         try:
             chunks = self.current_expression.split(",")
-            final_total = StandardDeviation.standard_deviation(chunks, True)
+            final_total = StandardDeviation.standard_deviation(chunks)
             self.current_expression = str(final_total)
         # self.update_label()
         # print(final_total)
@@ -202,6 +203,7 @@ class Calculator:
             self.update_label()
 
     def create_f7(self):
+        """creates standard deviation button"""
         button = tk.Button(self.buttons_frame, text="\u03C3", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
                            borderwidth=0, command=self.f7)
         button.grid(row=2, column=4, sticky=tk.NSEW)
