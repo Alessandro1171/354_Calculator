@@ -1,4 +1,4 @@
-from HelperFunctions import e_power_x, ln, power, truncate_value, abs,square_root_calculator
+from HelperFunctions import truncate_value, abs,square_root_calculator
 
 def arccos(x):
     if x > 1 or x < -1:
@@ -15,4 +15,5 @@ def arccos(x):
         ret = ret + 1.5707288
         ret = ret * square_root_calculator(1.0 - x)
         ret = ret - 2 * negate * ret
+
         return truncate_value(negate * 3.14159265358979 + ret)

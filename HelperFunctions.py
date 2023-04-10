@@ -69,9 +69,7 @@ def e_power_x(x, rounds):
 
     return result
 
-    """
-    new added part for sqrt method exclusively
-    """
+
 def square_root_calculator(squaredNumber):
     if squaredNumber==0 or squaredNumber==1:
         return squaredNumber
@@ -126,6 +124,7 @@ def square_root_calculator(squaredNumber):
             rootDecimal = "" + str(rootDecimal) + str(temp)
         return float((str(root) + "." + rootDecimal))
 
+
 def getHighestDivider(currenDivider, currentNumber):
     if(currentNumber<1):
         return 0
@@ -138,6 +137,7 @@ def getHighestDivider(currenDivider, currentNumber):
         counter = counter+1
     counter = int(counter)-2
     return counter
+
 
 def pairPart1(beforeDecimal):
     arrayOfPairs=[]
@@ -154,6 +154,8 @@ def pairPart1(beforeDecimal):
         beforeDecimal = beforeDecimal[2:]
         arrayOfPairs.append(characterPair)
     return arrayOfPairs
+
+
 def pariPart2(afterDecimal):
     arrayOfPairs = []
 
@@ -164,6 +166,8 @@ def pariPart2(afterDecimal):
     if len(afterDecimal) == 1:
         arrayOfPairs.append((afterDecimal+"0"))
     return arrayOfPairs
+
+
 def check_decimal(x):
     decimal_digits = len(str(x).split(".")[1])
     if decimal_digits > 5:
