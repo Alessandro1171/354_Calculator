@@ -56,11 +56,16 @@ x: 2, y: 3
 User must input the number before clicking the function's button.
 ### arcos(x)
 User must input the number before clicking the function's button.
+
 ![image](https://user-images.githubusercontent.com/86927717/230830133-0c864404-61c0-43f2-b8c4-da268ab2b4d1.png)
+
 **Note: For arcos(x), the number must be between -1 and 1 or the result will be NaN**
 **Choosing 0.12 as input**
+
 ![image](https://user-images.githubusercontent.com/86927717/230830323-912b5a89-3b7e-4c2e-a3da-8d4f671be6b5.png)
+
 **the output is right after clicked the feature button(And the result is in Radian not Degree.)**
+
 ![image](https://user-images.githubusercontent.com/86927717/230830549-f5ee06e0-923d-4ea6-9269-2b9099cc6d2e.png)
 
 
