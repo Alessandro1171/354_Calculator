@@ -1,5 +1,6 @@
 from ExponentialFunction import *
 
+
 def log(x, base):
 
     rounds = int(x * 6)

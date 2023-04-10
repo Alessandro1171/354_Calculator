@@ -10,4 +10,3 @@ def exponential_function2(self, x):
         result += term
         i += 1
     return result
-
