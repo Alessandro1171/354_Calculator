@@ -31,6 +31,10 @@ Programming language: Python
 4. Install tkinter for Python - https://www.youtube.com/watch?v=i7IjptYwa_g&ab_channel=Joey%27sTech
 5. Click the Run button
 
+**OR**
+
+Directly run the .exe file of the project which can be found in ```/dist``` (make sure Python is installed on your PC)
+
 ## How to use the calculator
 ![image](https://user-images.githubusercontent.com/82820460/230816768-b0944cb5-d410-44b6-b1bd-28a3fdecf7c5.png)
 
